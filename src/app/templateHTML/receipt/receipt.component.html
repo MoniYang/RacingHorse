@@ -1,0 +1,97 @@
+<button id="ticket" style="display: none;" type="button" class="btn btn-primary" data-toggle="modal" data-target="#GameReceipt">
+  票根按鈕自己隱藏
+</button>
+
+<!-- The Modal -->
+<div class="modal fade" id="GameReceipt">
+    <div class="modal-dialog modal-xs ">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <button id="closeTicket" type="button" class="close" data-dismiss="modal">&times;</button>
+                <div class="d-flex flex-column w-100">
+                    <h4 class="modal-title w-100">{{languageService.Language['Receipt_BetReceipt']}}</h4>
+                    <div class="d-flex w-100 flex-wrap">
+                        <div class="col-6 p-0">
+                            <p class="receipt__no text-white p-0 mb-0">{{languageService.Language['Receipt_No']}} {{dataSource.tickets.CurrentPeriod}}</p>
+                        </div>
+                        <div class="col-6 p-0 justify-content-end ">
+                            <p class="receipt__time text-white text-right p-0 mb-0">
+                                <i class="far fa-clock"></i> {{dataSource.tickets.CreateDate | date:'hh:mm:ss'}}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Modal body -->
+            <div class="modal-body">
+                <div class="receipt">
+                    <div class="receipt__inner">
+                        <ul *ngFor="let ticket of dataSource.tickets.MPlayList">
+                            <li>
+                                <span class="text-white">
+                                  {{ticket.LotteryInfoName}}
+                                </span>
+                                <span class="text-white">
+                                  {{ticket.Qty * ticket.Price}}
+                                </span>
+                            </li>
+                            <li style="justify-content: flex-start">
+                                <div *ngIf="ticket.LotteryInfoID > 10 && ticket.LotteryInfoID < 21">
+                                    <img *ngIf="ticket.SelectedNums == 'S'" style="height: 30px;" src="content/images/OpenHistory/87.png" alt="Spade" />
+                                    <img *ngIf="ticket.SelectedNums == 'H'" style="height: 30px;" src="content/images/OpenHistory/84.png" alt="Heart" />
+                                    <img *ngIf="ticket.SelectedNums == 'D'" style="height: 30px;" src="content/images/OpenHistory/86.png" alt="Diamond" />
+                                    <img *ngIf="ticket.SelectedNums == 'C'" style="height: 30px;" src="content/images/OpenHistory/85.png" alt="Club" />
+                                    <img *ngIf="ticket.SelectedNums == 'TA'" style="height: 30px;" src="content/images/OpenHistory/91.png" alt="Big" />
+                                    <img *ngIf="ticket.SelectedNums == 'HSIAO'" style="height: 30px;" src="content/images/OpenHistory/90.png" alt="Small" />
+                                    <img *ngIf="ticket.SelectedNums == 'Red'" style="height: 30px;" src="content/images/OpenHistory/88.png" alt="Red" />
+                                    <img *ngIf="ticket.SelectedNums == 'Black'" style="height: 30px;" src="content/images/OpenHistory/89.png" alt="Black" />
+                                    <img *ngIf="ticket.SelectedNums == 'UP'" style="height: 30px;" src="content/images/OpenHistory/88_2.png" alt="UP" />
+                                    <img *ngIf="ticket.SelectedNums == 'DOWN'" style="height: 30px;" src="content/images/OpenHistory/104.png" alt="DOWN" />
+                                    <img *ngIf="ticket.SelectedNums == '14'" style="height: 30px;" src="content/images/OpenHistory/47.png" alt="Jorker" />
+                                    <p class="text-red" *ngIf="ticket.SelectedNums !== 'S' && ticket.SelectedNums !== 'H'
+                                          && ticket.SelectedNums !== 'D' && ticket.SelectedNums !== 'C' && ticket.SelectedNums !== '14'
+                                          && ticket.SelectedNums !== 'TA' && ticket.SelectedNums !== 'HSIAO' && ticket.SelectedNums !== 'Red'
+                                          && ticket.SelectedNums !== 'Black' && ticket.SelectedNums !== 'UP' && ticket.SelectedNums !== 'DOWN'
+                                          ">
+                                        {{ticket.SelectedNums}}
+                                    </p>
+                                </div>
+                                <div *ngIf="ticket.LotteryInfoID <= 10 || ticket.LotteryInfoID >= 21">
+                                    <img *ngIf="ticket.SelectedNums == 'Red'" style="height: 30px;" src="content/images/OpenHistory/97.png" alt="Red" />
+                                    <img *ngIf="ticket.SelectedNums == 'Black'" style="height: 30px;" src="content/images/OpenHistory/89_3.png" alt="Black" />
+                                    <img *ngIf="ticket.SelectedNums == 'TA'" style="height: 30px;" src="content/images/OpenHistory/106.png" alt="Big" />
+                                    <img *ngIf="ticket.SelectedNums == 'HSIAO'" style="height: 30px;" src="content/images/OpenHistory/93.png" alt="Small" />
+                                    <img *ngIf="ticket.SelectedNums == 'TAN'" style="height: 30px;" src="content/images/OpenHistory/103.png" alt="Odd" />
+                                    <img *ngIf="ticket.SelectedNums == 'SHUANG'" style="height: 30px;" src="content/images/OpenHistory/92.png" alt="Even" />
+                                    <img *ngIf="ticket.SelectedNums == '1st'" style="height: 30px;" src="content/images/OpenHistory/96.png" alt="1st" />
+                                    <img *ngIf="ticket.SelectedNums == '2nd'" style="height: 30px;" src="content/images/OpenHistory/95.png" alt="2nd" />
+                                    <img *ngIf="ticket.SelectedNums == '3rd'" style="height: 30px;" src="content/images/OpenHistory/94.png" alt="3rd" />
+                                    <img *ngIf="ticket.SelectedNums == '1st12'" style="height: 30px;" src="content/images/OpenHistory/99.png" alt="1st12" />
+                                    <img *ngIf="ticket.SelectedNums == '2nd12'" style="height: 30px;" src="content/images/OpenHistory/100.png" alt="2nd12" />
+                                    <img *ngIf="ticket.SelectedNums == '3rd12'" style="height: 30px;" src="content/images/OpenHistory/101.png" alt="3rd12" />
+                                    <p class="text-red" *ngIf="ticket.SelectedNums !== 'Red' && ticket.SelectedNums !== 'Black'
+                                            && ticket.SelectedNums !== 'TA' && ticket.SelectedNums !== 'HSIAO' && ticket.SelectedNums !== 'TAN'
+                                            && ticket.SelectedNums !== 'SHUANG' && ticket.SelectedNums !== '1st' && ticket.SelectedNums !== '2nd'
+                                            && ticket.SelectedNums !== '3rd' && ticket.SelectedNums !== '1st12' && ticket.SelectedNums !== '2nd12'
+                                            && ticket.SelectedNums !== '3rd12'
+                                        ">
+                                        {{ticket.SelectedNums}}
+                                    </p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <div class="d-flex flex-column">
+                    <p class="text-white mb-0">{{languageService.Language['Receipt_Total']}}<span class="text-red">{{dataSource.tickets.TotalBet}}</span>{{languageService.Language['Receipt_Bet']}}</p>
+                    <p class="text-white mb-0">{{languageService.Language['Receipt_Cost']}} <span class="text-green">{{dataSource.tickets.TotalPrice}}</span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

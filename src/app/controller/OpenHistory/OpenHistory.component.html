@@ -1,0 +1,134 @@
+<div class="wrapper">
+    <div class="wrapper__inner">
+
+        <div class="container ">
+            <div class="col-lg-3 col-md-6 col-sm-6 col-xs-6 p-0">
+                <h4 class="title_style  small_title">
+                    <span class="border_style text-left">{{languageService.Language['Home_OpenHistory']}}</span>
+                </h4>
+            </div>
+            <!-- ngIf: dataSource.SelectLotteryClass.LotteryClassID == 5 -->
+            <div class="topic_hr"></div>
+            <div class="row">
+                <div class="col-md-2 col-sm-4 col-6 mb-2">
+                    <select [(ngModel)]="dataSource.SelectLotteryClass" (ngModelChange)="SelectLotteryClass()">
+                      <option *ngFor="let selectedLotteryClass of dataSource.selectedLotteryClass"
+                        [ngValue]="selectedLotteryClass">{{selectedLotteryClass.LotteryClassName}}</option>
+                    </select>
+                </div>
+                <div class="col-md-2 col-sm-4 col-6 mb-2">
+                    <select [(ngModel)]="dataSource.SelectLotteryType">
+                      <option *ngFor="let selectedLotteryType of dataSource.selectedLotteryType"
+                        [ngValue]="selectedLotteryType">{{selectedLotteryType.LotteryTypeCode}}</option>
+                    </select>
+                </div>
+                <div class="col-md-2 col-sm-4 col-12 mb-2">
+                    <select [(ngModel)]="dataSource.SelectRoom">
+                    <option *ngFor="let selectedRoom of dataSource.selectedRoom"
+                      [ngValue]="selectedRoom">{{selectedRoom.RoomID}}</option>
+                  </select>
+                </div>
+                <div class="col-md-6 col-sm-12 col-xs-12 text-right text-sm-left ">
+                    <div class="date_search">
+                        <!-- <h4 class="search_title float-left mr-2 mt-0">搜尋開獎歷史</h4> -->
+                        <ul class="">
+                            <li class="search_title  mr-2 mt-0">{{languageService.Language['History_Search']}}</li>
+                            <li>
+                                <input type="date" [(ngModel)]="dataSource.searchCondition.dateS">
+                            </li>
+                            <li>~</li>
+                            <li>
+                                <input type="date" [(ngModel)]="dataSource.searchCondition.dateE">
+                            </li>
+                            <li>
+                                <button (click)="FindOpenHistory()" class="circle_btn">{{languageService.Language['History_Go']}}</button>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="clearfix"></div>
+            <div class="real_table mb-3">
+                <table>
+                    <tbody>
+                        <tr>
+                            <th>{{languageService.Language['History_Date']}}</th>
+                            <th>{{languageService.Language['History_GameType']}}</th>
+                            <th>{{languageService.Language['History_RoomID']}}</th>
+                            <th>{{languageService.Language['History_SeqNo']}}</th>
+                            <th>{{languageService.Language['History_Result']}}</th>
+                        </tr>
+                        <tr *ngFor="let openLotteryObj of dataSource.openLotteryObj">
+                            <td>{{openLotteryObj.UpdateDate | date : "yyyy/MM/dd HH:mm:ss"}}</td>
+                            <td>{{openLotteryObj.LotteryTypeName}}</td>
+                            <td>{{openLotteryObj.RoomID}}</td>
+                            <td>{{openLotteryObj.CurrentPeriod}}</td>
+                            <td>
+                                <p *ngIf="openLotteryObj.ResultObj.OpenLotteryResult">
+                                    {{languageService.Language['History_Result']}}:
+                                    <span style="color: black; font-size: 20px;" *ngIf="openLotteryObj.ResultObj.OpenLotteryResult.Suits == 'S'">
+                                    ♠
+                                    </span>
+                                    <span style="color: red; font-size: 20px;" *ngIf="openLotteryObj.ResultObj.OpenLotteryResult.Suits == 'H'">
+                                    ♥
+                                    </span>
+                                    <span style="color: red; font-size: 20px;" *ngIf="openLotteryObj.ResultObj.OpenLotteryResult.Suits == 'D'">
+                                    ♦
+                                    </span>
+                                    <span style="color: black; font-size: 20px;" *ngIf="openLotteryObj.ResultObj.OpenLotteryResult.Suits == 'C'">
+                                    ♣
+                                    </span>
+                                    <span *ngIf="openLotteryObj.ResultObj.OpenLotteryResult.PokerNo == 14">
+                                    🃏
+                                    </span>
+                                    <span *ngIf="openLotteryObj.ResultObj.OpenLotteryResult.PokerNo < 14">
+                                    {{openLotteryObj.ResultObj.OpenLotteryResult.PokerNo}}
+                                    </span>
+                                </p>
+                                <p *ngIf="openLotteryObj.ResultObj.Round2">
+                                    {{languageService.Language['History_Round_2']}}:
+                                    <span *ngIf="(openLotteryObj.ResultObj.Round2 % 2) == 1">{{languageService.Language['History_Left']}}</span>
+                                    <span *ngIf="(openLotteryObj.ResultObj.Round2 % 2) == 0">{{languageService.Language['History_Right']}}</span>
+                                </p>
+                                <p *ngIf="openLotteryObj.ResultObj.Round3">
+                                    {{languageService.Language['History_Round_3']}}:
+                                    <span *ngIf="(openLotteryObj.ResultObj.Round3 % 2) == 1">{{languageService.Language['History_Left']}}</span>
+                                    <span *ngIf="(openLotteryObj.ResultObj.Round3 % 2) == 0">{{languageService.Language['History_Right']}}</span>
+                                </p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div style="margin:0px auto;">
+                <div class="page ">
+                    <div class="col-12 p-0 d-flex align-items-center justify-content-end ">
+                        <span class="mr-2" style="color: white;">{{languageService.Language['History_PageSize']}}</span>
+                        <select [(ngModel)]="dataSource.PagerObj.PageSize" (ngModelChange)="ChangePageSize()" style="width:80px;">
+                          <option *ngFor="let PageSize of dataSource.PagerObj.PageSizeArray"
+                            [ngValue]="PageSize">{{PageSize}}</option>
+                        </select>
+                        <ul class="page__list">
+                            <li>
+                                <a href="" onclick='return false;' (click)="ChangePage(1)" *ngIf="dataSource.PagerObj.CurrentPage > 1">
+                                    <i class="fa fa-arrow-left" aria-hidden="true"></i>
+                                </a>
+                            </li>
+                            <li type="button" *ngFor="let PageArray of dataSource.PagerObj.PageArray">
+                                <a href="" onclick='return false;' (click)="ChangePage(PageArray)">{{PageArray}}</a>
+                            </li>
+                            <li>
+                                <a href="" onclick='return false;' (click)="ChangePage((dataSource.PagerObj.TotalPage-1))" *ngIf="dataSource.PagerObj.CurrentPage < dataSource.PagerObj.PageRangeMax">
+                                    <i class="fa fa-arrow-right" aria-hidden="true"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

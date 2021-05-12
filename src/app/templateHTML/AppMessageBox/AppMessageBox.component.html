@@ -1,0 +1,42 @@
+<ng-container>
+    <button id="appDownloadModalShow" class="btn btn-primary btn-block" data-toggle="modal" data-target="#appMsgModalLong" style="display: none;"></button>
+    <div class="modal fade" id="appMsgModalLong" tabindex="-1" role="dialog" aria-labelledby="appMsgModalLongTitle" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header text-center">
+                    <h5 class="modal-title w-100">{{modalMsg.title}}</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <i class="fa fa-times"
+              aria-hidden="true"></i>
+          </button>
+                </div>
+                <div class="modal-body">
+                    <div class="col-12 " *ngIf="!modalMsg.isAppDownload">
+                        <small id="fileHelp" class="form-text mb-10 clearfix">{{modalMsg.msg}}</small>
+                    </div>
+                    <a class="col-12 app-download-modal d-flex just-content-center align-items-center flex-column text-white" *ngIf="modalMsg.isAppDownload && modalMsg.downloadKey=='mars999'" target="_blank" href="{{modalMsg.appDownloadUrl.mars999_Android}}">
+                        <img class="mb-10 " src="content/images/icon/qrcode.png" alt="">
+                        <span>{{languageService.Language['Home_DownloadNow']}}</span>
+                    </a>
+                    <a class="col-12 app-download-modal d-flex just-content-center align-items-center flex-column text-white" *ngIf="modalMsg.isAppDownload && modalMsg.downloadKey=='918kiss2'" target="_blank" href="{{modalMsg.appDownloadUrl.kiss2918}}">
+                        <img class="mb-10 " src="content/images/icon/qrcode.png" alt="">
+                        <span>{{languageService.Language['Home_DownloadNow']}}</span>
+                    </a>
+                    <a class="col-12 app-download-modal d-flex just-content-center align-items-center flex-column text-white" *ngIf="modalMsg.isAppDownload && modalMsg.downloadKey=='kaya918'" target="_blank" href="{{modalMsg.appDownloadUrl.kaya918}}">
+                        <img class="mb-10 " src="content/images/icon/qrcode.png" alt="">
+                        <span>{{languageService.Language['Home_DownloadNow']}}</span>
+                    </a>
+                    <a class="col-12 app-download-modal d-flex just-content-center align-items-center flex-column text-white" *ngIf="modalMsg.isAppDownload && modalMsg.downloadKey=='pussy888'" target="_blank" href="{{modalMsg.appDownloadUrl.pussy888}}">
+                        <img class="mb-10 " src="content/images/icon/qrcode.png" alt="">
+                        <span>{{languageService.Language['Home_DownloadNow']}}</span>
+                    </a>
+                </div>
+                <div class="modal-footer" *ngIf="!modalMsg.isAppDownload">
+                    <button (click)="CallBack(true)" translate="confirm" type="button" class="btn theme_btn" data-dismiss="modal">
+                      {{languageService.Language['Modal_Confirm']}}
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-container>

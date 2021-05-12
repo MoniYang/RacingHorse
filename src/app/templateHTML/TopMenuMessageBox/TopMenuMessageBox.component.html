@@ -1,0 +1,30 @@
+<ng-container>
+    <button id="TopModalShow" class="btn btn-primary btn-block" data-toggle="modal" data-target="#topMsgModalLong" style="display: none;"></button>
+    <div class="modal fade" id="topMsgModalLong" tabindex="-1" role="dialog" aria-labelledby="topMsgModalLongTitle" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">{{modalMsg.title}}</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <i class="fa fa-times"
+                        aria-hidden="true"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="col-12">
+                        <small id="fileHelp"  [ngClass]="{'text-wrap-line': modalMsg.isAppDownload}" class="form-text mb-10 clearfix">{{modalMsg.msg}}</small>
+                        <a *ngIf="modalMsg.isAppDownload" class="app-download" target="_blank" rel="noreferrer noopenner" href="{{modalMsg.appDownloadUrl.kiss918}}">
+                            <img src="content/images/gameLogo/918kiss.png" alt="" />
+                            <span>{{languageService.Language['Home_918Kiss']}}</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button (click)="CallBack()" translate="confirm" type="button" class="btn theme_btn" data-dismiss="modal">
+                        {{languageService.Language['Modal_Confirm']}}
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-container>

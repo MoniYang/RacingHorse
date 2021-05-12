@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Mars999</title>
+    <!-- <base href="/Mars.Front/"> -->
+    <base href="/">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+
+    <link rel="stylesheet" href="content/css/bootstrap/bootstrap.css">
+    <link rel="stylesheet" href="content/css/HorseDefault.css">
+    <link rel="stylesheet" href="content/css/owl/owl.carousel.min.css">
+    <link rel="stylesheet" href="content/css/owl/owl.theme.default.min.css">
+
+</head>
+
+<body>
+    <Mars999-app></Mars999-app>
+    <script src="content/scripts/jquery/jquery-3.3.1.min.js"></script>
+    <script src="content/scripts/jquery/jquery.lazyload.js"></script>
+    <script src="content/scripts/jquery.signalR/jquery.signalR-2.4.1.js"></script>
+    <script src="content/scripts/jquery.signalR/SignalRHelper.js"></script>
+    <script src="content/scripts/UserAgent.js"></script>
+    <script src="content/scripts/bootstrap/bootstrap.js"></script>
+    <script src="content/scripts/bootstrap/bootstrap.bundle.js"></script>
+    <script src="content/scripts/bootstrap/bootstrap.bundle.js"></script>
+    <script src="content/scripts/owl/owl.carousel.min.js"></script>
+</body>
+
+<script>
+    // function IsLogout(url) {
+    //     var logoutURL = serviceBase + url
+    //     var logoutConfim = confirm('Logout?');
+    //     if (logoutConfim) {
+    //         $.post(logoutURL, function() {
+
+    //         });
+    //     }
+    // }
+
+    $(document).ready(function() {
+        /*
+        let locationUrl = location.href.split('//');
+        let checkURL = locationUrl[1].split('.');
+        if (checkURL[0].indexOf('www') === -1 || locationUrl[1].indexOf('Mars.Front') == -1) {
+            location.href = 'http://www.mars999s.com/Mars.Front/'
+        }
+        */
+
+        var mySignalRHelper = SignalRHelper();
+        $(".index_slider.owl-carousel").owlCarousel({
+            loop: true,
+            margin: 0,
+            nav: false,
+            dots: false,
+            autoplay: true,
+            animateOut: "fadeOut",
+            // animateIn: 'flipInX',
+            responsive: {
+                0: {
+                    items: 1,
+                },
+                600: {
+                    items: 1,
+                },
+                1000: {
+                    items: 1,
+                },
+            },
+        });
+    });
+
+    // function UnityOpen(str) {
+    //     let url = 'uniwebview://openurl?' + str;
+    //     alert(url);
+    //     let checkUnityApp = localStorage.getItem('IsUnityApp').toString();
+    //     console.log(url);
+    //     if (checkUnityApp.toLowerCase() === 'true') {
+    //         window.open(url,
+    //             '_blank',
+    //             'location=no,fullscreen=yes,toolbar=yes,scrollbars=yes,resizable=yes,height=720,width=1080');
+    //     }
+    // }
+</script>
+
+</html>

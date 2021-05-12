@@ -1,0 +1,29 @@
+<div class="wrapper lobbyDeskTopUsed">
+    <div class="wrapper__inner">
+        <div class="container {{dataSource.lobbyClass}}">
+            <!-- videoUsed -->
+            <div [ngClass]="{'Video--In': dataSource.isShowVideo, 'Video--Out': !dataSource.isShowVideo}" class="gameVideo Video--Out">
+                <!--Video--Out  / Video--In   -->
+                <div *ngIf="dataSource.isShowVideo" class="container">
+                    <div class="col-md-8 offset-md-2 videoSize">
+                        <video muted autoplay playsinline poster="content/images/video_bg.png" src="{{dataSource.nowVideoURL}}">
+                          <source src="http://cdnsec.7stars.asia/video/Roulette/Roulette_0_1.mp4" />
+                        </video>
+                    </div>
+                </div>
+            </div>
+            <!-- ##VideoUsed -->
+            <div class="lobby">
+                <div class="col-12 order-md-3 order-2 p-0 lobby-content">
+                    <div class="embed-container">
+                        <iframe (window:resize)="OnResize()" [src]="Transform(dataSource.nowLobbyURL)" frameborder="0" allowfullscreen="true" webkitallowfullscreen="true" mozallowfullscreen="true" style="border: 0; width: 100%; height: 100%"></iframe>
+                    </div>
+                    <!-- <div id="temp-show-width"></div> -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <app-receipt></app-receipt>
+    <app-rule></app-rule>
+    <app-MessageBox [modalMsg]="dataSource.modalMsg"></app-MessageBox>
+</div>

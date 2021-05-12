@@ -1,0 +1,108 @@
+<img id="btnRule" src="./content/images/GameRelus.png" class="img-fluid" data-toggle="modal" data-target="#GameRule" style="display: none;" />
+
+<!-- The Modal -->
+<div class="modal fade show gameRule " id="GameRule">
+    <div class="modal-dialog modal-md ">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <div class="d-flex flex-column w-100">
+                    <h4 class="modal-title w-100 mb-0">{{dataSource.ShowRules.Title}}</h4>
+                </div>
+            </div>
+            <!-- Modal body -->
+            <div class="modal-body">
+                <div *ngIf="dataSource.RuleCode < 3">
+                    <div *ngIf="dataSource.ShowRules.videoUrl" class="gameRule__inner">
+                        <h6 class="gameRule__title">{{languageService.Language['Rule_TutorialVideo']}}</h6>
+                        <video class="gameRule__video" preload="metadata" muted controls src="{{dataSource.ShowRules.videoUrl}}">
+                        </video>
+                        <hr>
+                    </div>
+                    <div *ngFor="let showRule of dataSource.ShowRules.rules" class="gameRule__inner">
+                        <h6 class="gameRule__title">{{showRule.Title}}<span>{{showRule.TitleSmall}}</span></h6>
+                        <p class="mb-0">{{showRule.Info}}</p>
+                        <ul class="mb-1">
+                            <li *ngFor="let Notice of showRule.Notices">
+                                {{Notice.ruleText}}
+                            </li>
+                        </ul>
+                        <img src="{{showRule.img}}" alt="">
+                        <hr>
+                    </div>
+                </div>
+                <div *ngIf="dataSource.RuleCode === 3"  id="rouletteRule">
+                    <div class="gameRule__inner ">
+                        <ul class="nav nav-tabs">
+                            <li class="" *ngFor="let showRule of dataSource.ShowRules.Button; let recordIndex = index;">
+                                <button (click)="SetRouletteType(recordIndex)"[ngClass]="{'active': dataSource.ShowRules.RouletteType==recordIndex}" data-toggle="tab" href="#home">{{showRule.Title}}</button>
+                            </li>
+                        </ul>
+                        <div class="tab-content">
+                            <!--French-->
+                            <div [ngClass]="{'active': dataSource.ShowRules.RouletteType==0}" class="tab-pane active" id="home">
+                                <div *ngFor="let showRule of dataSource.ShowRules.rules">
+                                    <div class="gameRule__img"><img src="{{showRule.FrenchRoulette.TitleImg}}" alt=""></div>
+                                    <div id="Roulette" *ngFor="let TableContent of showRule.FrenchRoulette.TableContent">
+                                        <p class="gameRule__SmallTitle">{{TableContent.SmallTitle}}</p>
+                                        <div class="real_table">
+                                            <table>
+                                                <tr>
+                                                    <th width="40%">{{languageService.Language['Rule_BetName']}}</th>
+                                                    <th width="10%">{{languageService.Language['Rule_Example']}}</th>
+                                                    <th width="30%">{{languageService.Language['Rule_Example']}}</th>
+                                                    <th width="10%">{{languageService.Language['Rule_Payout']}}</th>
+                                                </tr>
+                                                <tr *ngFor="let TableText of TableContent.TableTexts">
+                                                    <td>{{TableText.BetName}}</td>
+                                                    <td>{{TableText.ChipsAdd}}</td>
+                                                    <td>{{TableText.LotteryValue}}</td>
+                                                    <td>{{TableText.payout}}</td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--GroupBet-->
+                            <div [ngClass]="{'active': dataSource.ShowRules.RouletteType==1}" class="tab-pane">
+                                <div id="GroupBet" *ngFor="let showRule of dataSource.ShowRules.rules">
+                                    <div class="gameRule__img"><img src="{{showRule.GroupBet.TitleImg}}" alt=""></div>
+                                    <ul class="GroupBet" *ngFor="let TableText of showRule.GroupBet.TableTexts">
+                                        <li><img src="{{TableText.GroupImg}}" alt="">
+                                            <span class="{{TableText.GroupClass}}">
+                              </span>{{TableText.GroupTitle}}
+                                        </li>
+                                        <li>{{TableText.GroupText}}</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <!--OddAndBetLimited-->
+                            <div [ngClass]="{'active': dataSource.ShowRules.RouletteType==2}" class="tab-pane">
+                                <div id="OddandBetLimited" *ngFor="let showRule of dataSource.ShowRules.rules">
+                                    <div class="real_table">
+                                        <table>
+                                            <tr>
+                                                <th width="40%">{{languageService.Language['Rule_BetDescription']}}</th>
+                                                <th width="30%">{{languageService.Language['Rule_Example']}}</th>
+                                                <th width="10%">{{languageService.Language['Rule_Pays']}}</th>
+                                                <th width="15%">{{languageService.Language['Rule_Min-Max']}}</th>
+                                            </tr>
+                                            <tr *ngFor="let TableText of showRule.OddAndBetLimited.TableTexts">
+                                                <td>{{TableText.Description}}</td>
+                                                <td>{{TableText.BetNumber}}</td>
+                                                <td>{{TableText.Pays}}</td>
+                                                <td>{{TableText.Maxmum}}</td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

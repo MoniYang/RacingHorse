@@ -1,0 +1,27 @@
+<ng-container>
+    <button id="ModalShow" class="btn btn-primary btn-block" data-toggle="modal" data-target="#msgModalLong" style="display: none;"></button>
+    <div class="modal fade" id="msgModalLong" tabindex="-1" role="dialog" aria-labelledby="msgModalLongTitle" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 *ngIf="modalMsg.msg === 'Success'" class="modal-title">{{languageService.Language['Modal_Success_Title']}}</h5>
+                    <h5 *ngIf="modalMsg.msg != 'Success'" class="modal-title">{{modalMsg.title}}</h5>
+                    <button (click)="CallBack(true)" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <i class="fa fa-times" aria-hidden="true"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="col-12">
+                        <small *ngIf="modalMsg.msg === 'Success'" id="fileHelp" class="form-text  mb-10 clearfix">{{languageService.Language['Modal_Success']}}</small>
+                        <small *ngIf="modalMsg.msg != 'Success'" id="fileHelp" class="form-text  mb-10 clearfix">{{modalMsg.msg}}</small>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button (click)="CallBack(true)" translate="confirm" type="button" class="btn theme_btn" data-dismiss="modal">
+                        {{languageService.Language['Modal_Confirm']}}
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-container>

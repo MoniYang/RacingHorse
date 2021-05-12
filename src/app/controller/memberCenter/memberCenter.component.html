@@ -1,0 +1,295 @@
+<div class="wrapper">
+    <div class="wrapper__inner">
+        <div class="container">
+            <div class="d-flex flex-wrap">
+                <div class="userLink">
+                    <!-- Nav tabs -->
+                    <div class=" col-12">
+                        <ul class="nav nav-tabs" id="myTab" role="tablist">
+                            <li class="" role="presentation">
+                                <button class=" " id="home-tab" data-toggle="tab" data-target="#userInfo" role="tab" aria-controls="home" aria-selected="true">
+                                    <i class="fas fa-users-cog"></i>
+                                    <span>{{languageService.Language['MemberCenter_UserInfo']}}</span>
+                                </button>
+                            </li>
+                            <li class="" role="presentation">
+                                <button class="" id="profile-tab" data-toggle="tab" data-target="#betHistory" role="tab" aria-controls="profile" aria-selected="false">
+                                <i class="fas fa-file-medical-alt"></i>
+                                <span>{{languageService.Language['MemberCenter_BetHistory']}}</span>
+                            </button>
+                            </li>
+                            <li class="" role="presentation">
+                                <!--
+                                <button class="active" id="messages-tab" data-toggle="tab" data-target="#statement" role="tab" aria-controls="messages" aria-selected="false">
+                                  <i class="fas fa-receipt"></i><span>statement</span>
+                                </button>
+                              -->
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- Tab panes -->
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="userInfo" role="tabpanel" aria-labelledby="home-tab">
+                            <div class="d-flex flex-wrap">
+                                <div class="col-lg-3 col-12 text-right">
+                                    <button (click)="ChangeUserInfo()" class="mobieUserInfo--btn design_btn d-block d-lg-none mb-2 mb-md-3">
+                                        <i class="fas fa-address-book"></i>
+                                        {{languageService.Language['MemberCenter_UserInfo']}}
+                                    </button>
+                                    <div class="userInfo" [hidden]="dataSource.isShowUserInfo">
+                                        <!-- <div class="userFoto">
+                                            <img src="content/images/user.png" alt="">
+                                            <button class="userFoto--btn"></button>
+                                        </div> -->
+                                        <div (click)="ChangeEditUserInfo()" class="userInfo--edit">
+                                            <i class="fas fa-user-edit"></i>{{languageService.Language['MemberCenter_Edit']}}
+                                        </div>
+                                        <ul>
+                                            <li>
+                                                <span>{{languageService.Language['MemberCenter_Accout']}} :</span>
+                                                <span class="show_text">{{dataSource.UserInfo.UserName}}</span>
+                                            </li>
+                                            <li>
+                                                <span>{{languageService.Language['MemberCenter_Name']}} : </span><span>{{dataSource.UserInfo.NickName}}</span>
+                                                <span [hidden]="!dataSource.isEditUserInfo" class="show_input">
+                                            <input [(ngModel)]="dataSource.UpdateObj.NickName"
+                                                type="text"
+                                                name="NickName"
+                                                placeholder="{{languageService.Language['MemberCenter_NickName']}}"
+                                                required />
+                                            </span>
+                                            </li>
+                                            <li>
+                                                <span>{{languageService.Language['MemberCenter_VIPLevel']}}：</span>
+                                                <span class="yellow">{{dataSource.UserInfo.UserLevelID}}</span>
+                                            </li>
+                                            <li>
+                                                <span>{{languageService.Language['MemberCenter_Email']}} :</span>
+                                                <span class="show_text">{{dataSource.UserInfo.Email}}</span>
+                                            </li>
+                                            <li>
+                                                <span>{{languageService.Language['MemberCenter_MobilePhone']}} :</span>
+                                                <span class="show_text">{{dataSource.UserInfo.Phone}}</span>
+                                            </li>
+                                        </ul>
+                                        <button (click)="UpdateMember()" type="button" class="userInfo--submit design_btn mb-3">
+                                            <i class="fa fa-plus" aria-hidden="true"></i>
+                                            {{languageService.Language['MemberCenter_Sutmit']}}
+                                        </button>
+                                        <button type="button" class="userInfo--submit design_btn mb-3" data-toggle="modal" data-target="#ResetModalLong">
+                                            {{languageService.Language['MemberCenter_ResetPassword']}}
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="col-lg-9 col-12">
+                                    <div class="userBox">
+                                        <ul>
+                                            <li>
+                                                <div class="userTime">
+                                                    <h3 class="userBox__title">
+                                                        {{languageService.Language['MemberCenter_UserTime']}}
+                                                    </h3>
+                                                    <ul>
+                                                        <li>{{languageService.Language['MemberCenter_LoginTime']}} : {{dataSource.UserInfo.LoginTime}}</li>
+                                                        <li>{{languageService.Language['MemberCenter_LastLoginTime']}} : {{dataSource.UserInfo.LastLoginTime}}</li>
+                                                        <li>{{languageService.Language['MemberCenter_LoginIP']}} : {{dataSource.UserInfo.LoginIP}}</li>
+                                                        <li>{{languageService.Language['MemberCenter_ReferralFeeReleaseTime']}} : {{dataSource.UserInfo.ReferralPayType}} </li>
+                                                    </ul>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="userTime">
+                                                    <h3 class="userBox__title">
+                                                        {{languageService.Language['MemberCenter_TransactionInfo']}}
+                                                    </h3>
+                                                    <ul>
+                                                        <li>{{languageService.Language['MemberCenter_Balance']}} : {{dataSource.UserInfo.TotalBalance}}</li>
+                                                        <li>{{languageService.Language['MemberCenter_MonthlyAccumulativeDepositAmount']}} : </li>
+                                                        <li>{{languageService.Language['MemberCenter_DepositAmount']}} : {{dataSource.UserInfo.TotalBalance}}</li>
+                                                        <li>{{languageService.Language['MemberCenter_HighestWin']}} : </li>
+                                                        <li>{{languageService.Language['MemberCenter_TotalBettingAmount']}} : </li>
+                                                    </ul>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="userBank">
+                                        <h3 class="userBox__title">{{languageService.Language['MemberCenter_BankCardInfo']}}</h3>
+                                        <button (click)="ChangeAddBankCard()" class="userBank--add design_btn">
+                                            <i class="fas fa-plus-circle"></i>
+                                            {{languageService.Language['MemberCenter_AddCard']}}
+                                        </button>
+                                        <div [hidden]="dataSource.isShowAddCard" class="userBank__addCard">
+                                            <div class="d-flex flex-wrap">
+                                                <div class="col-md-9 col-12 p-0">
+                                                    <div class="d-flex flex-sm-row flex-column">
+                                                        <select [(ngModel)]="dataSource.NowAcceptedBank" (ngModelChange)="ConsoleLog(dataSource.NowAcceptedBank)" class="form-control mr-10" name="" id="">
+                                                            <option value="">{{languageService.Language['MemberCenter_PleaseChoose']}}</option>
+                                                            <option *ngFor="let AcceptedBank of dataSource.AcceptedBanks"
+                                                                [ngValue]="AcceptedBank">
+                                                                {{AcceptedBank.BankCode}} {{AcceptedBank.BankName}}
+                                                            </option>
+                                                        </select>
+                                                        <input [(ngModel)]="dataSource.BankNumber" name="BankNumber" id="BankNumber" class="form-control" type="text" placeholder="{{languageService.Language['MemberCenter_BankNumber']}}" onclick="return false">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3 col-12 text-center text-md-right p-0">
+                                                    <button (click)="AddMBank()" class="design_btn userBank__submitBtn">
+                                                        {{languageService.Language['MemberCenter_Sutmit']}}
+                                                        <i class="fas fa-check-circle  mr-0"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="userBank__card ">
+                                            <ul class="">
+                                                <li *ngFor="let BankInfo of dataSource.BankInfos" class="">
+                                                    <div class="userBank__item">
+                                                        <ul class="userBank__btns">
+                                                            <li><button class="userBank--edit"><i class="fas fa-edit"></i></button></li>
+                                                            <li><button class="userBank--delete"><i class="fas fa-trash-alt"></i></button></li>
+                                                        </ul>
+                                                        <p class="userBank__name">{{BankInfo.BankName}}</p>
+                                                        <p class="userBank__num">{{BankInfo.BankNumber}}</p>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane " id="betHistory" role="tabpanel" aria-labelledby="profile-tab">
+                            <app-BetHistorySearch></app-BetHistorySearch>
+                        </div>
+
+                        <div class="tab-pane " id="statement" role="tabpanel" aria-labelledby="messages-tab">
+                            <!--
+                            <div class="dateSearch mt-0">
+                                <ul class="align-items-center ">
+                                    <li class="search_title  mr-2 mt-0">Search</li>
+                                    <li><input type="date" ng-model="dataSource.searchCondition.dateS" class="ng-pristine ng-untouched ng-valid ng-not-empty"></li>
+                                    <li>~</li>
+                                    <li><input type="date" ng-model="dataSource.searchCondition.dateE" class="ng-pristine ng-untouched ng-valid ng-not-empty"></li>
+                                    <li><button class="circle_btn" ng-click="search()">go</button></li>
+                                </ul>
+                            </div>
+                            <div class="real_table  mb-2">
+                                <table class="mt-0">
+                                    <tbody>
+                                        <tr>
+                                            <th>Time</th>
+                                            <th>Opening Balance</th>
+                                            <th>Detail</th>
+                                            <th>Amount</th>
+                                            <th>Accumulative</th>
+                                        </tr>
+                                        <tr>
+                                            <td>2020-06-18 10:07:00</td>
+                                            <td>1990180769.0463</td>
+                                            <td>
+                                                Angent
+                                            </td>
+                                            <td>
+                                                690.0000
+                                            </td>
+                                            <td>1990179769.0463</td>
+                                        </tr>
+                                        <tr>
+                                            <td>2020-06-18 10:07:00</td>
+                                            <td>1990180769.0463</td>
+                                            <td>
+                                                Angent
+                                            </td>
+                                            <td>
+                                                690.0000
+                                            </td>
+                                            <td>1990179769.0463</td>
+                                        </tr>
+                                        <tr>
+                                            <td>2020-06-18 10:07:00</td>
+                                            <td>1990180769.0463</td>
+                                            <td>
+                                                Angent
+                                            </td>
+                                            <td>
+                                                690.0000
+                                            </td>
+                                            <td>1990179769.0463</td>
+                                        </tr>
+                                        <tr>
+                                            <td>2020-06-18 10:07:00</td>
+                                            <td>1990180769.0463</td>
+                                            <td>
+                                                Angent
+                                            </td>
+                                            <td>
+                                                690.0000
+                                            </td>
+                                            <td>1990179769.0463</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="page ">
+                                <div class="col-12 p-0 d-flex align-items-center justify-content-end ">
+                                    <span class="mr-2" style="color: white;">Page Size</span>
+                                    <select class="" style="width:80px;">
+                    <option value="number:10" selected="selected">10</option>
+                    <option value="number:20">20</option>
+                    <option value="number:50">50</option>
+                    <option value="number:100">100</option>
+                  </select>
+                                    <ul class="page__list">
+                                        <li>
+                                        </li>
+                                        <li type="button" class="active"><a href="">1</a></li>
+                                        <li type="button"><a href="">2</a></li>
+                                        <li type="button"><a href="">3</a></li>
+                                        <li type="button"><a href="">4</a></li>
+                                        <li><a href=""><i class="fa fa-arrow-right" aria-hidden="true"></i></a></li>
+                                    </ul>
+                                </div>
+
+                            </div>
+                            -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade sign_area" id="ResetModalLong" tabindex="-1" role="dialog" aria-labelledby="ResetModalLongTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <button id="CloseLogin" type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+            <div class="modal-body">
+                <div class="tab-content">
+                    <div class="tab-pane active">
+                        <ul class="d-flex flex-wrap">
+                            <li class="col-12">
+                                <label for="MemberOldPwd">{{languageService.Language['MemberCenter_OldPassword']}}</label>
+                                <input [(ngModel)]="dataSource.resetObj.MemberOldPwd" type="text" id="MemberOldPwd" name="MemberOldPwd">
+                            </li>
+                            <li class="col-12">
+                                <label for="MemberNewPwd">{{languageService.Language['MemberCenter_NewPassowrd']}}</label>
+                                <input [(ngModel)]="dataSource.resetObj.MemberNewPwd" type="text" id="MemberNewPwd" name="MemberNewPwd">
+                            </li>
+                            <li class="col-12">
+                                <label for="ConfirmPassword">{{languageService.Language['MemberCenter_ConfirmPassword']}}</label>
+                                <input [(ngModel)]="dataSource.resetObj.ConfirmPassword" type="text" id="ConfirmPassword" name="ConfirmPassword">
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="design_btn" data-dismiss="modal">{{languageService.Language['MemberCenter_Close']}}</button>
+                <button (click)="resetPwd()" type="button" class="theme_btn">{{languageService.Language['MemberCenter_UserInfo_Submit']}}</button>
+            </div>
+        </div>
+    </div>
+</div>

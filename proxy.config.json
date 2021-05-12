@@ -1,0 +1,14 @@
+{
+    "/Mars.API": {
+        "target": "http://www.parkdragon.net",
+        "secure": false,
+        "changeOrigin": true,
+        "pathRewrite": { "^/Mars.API": "" }
+    },
+    "/GHL.API": {
+        "target": "http://www.hkgplottery.com",
+        "secure": false,
+        "changeOrigin": true,
+        "pathRewrite": { "^/GHL.API": "" }
+    }
+}

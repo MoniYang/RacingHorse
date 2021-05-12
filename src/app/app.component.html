@@ -1,0 +1,64 @@
+<div [ngClass]="{'fixed': pageYoffset > 80, 'lobbyUsed' : (dataSource.routerURL.indexOf('lobby') >= 0 && dataSource.userBrowser.isMobile)}" id="header_fullwidth" class="header">
+    <div *ngIf="dataSource.userBrowser.isMobile && dataSource.routerURL.indexOf('lobby') >= 0">
+        <!-- <app-LobbyTopMenu></app-LobbyTopMenu> -->
+    </div>
+    <div *ngIf="!dataSource.userBrowser.isMobile || dataSource.routerURL.indexOf('lobby') == -1">
+        <!-- <app-topmenu></app-topmenu> -->
+    </div>
+</div>
+<!-- <div class="livechat" (click)="livechatOpenEvent()">
+    <div *ngIf="!dataSource.userBrowser.isMobile || dataSource.routerURL.indexOf('lobby') == -1" class="livechat--contact livechat--btn" [ngClass]="{ 'open': dataSource.livechatOpen }">
+        <p>{{languageService.Language['Home_ContactUs']}}</p>
+    </div>
+    <div class="box" [ngClass]="{ open: dataSource.livechatOpen }">
+        <div class="toptobottom">
+            <img src="content/images/svg/live.svg" alt="" />
+        </div>
+        <ul>
+            <li>
+                <div class="live-text">
+                    <p>
+                        <a href=""><i class="fab fa-whatsapp"></i>Whatsapp </a>
+                    </p>
+                </div>
+            </li>
+            <li class="live-item">
+                <div class="live-text">
+                    <p>
+                        <a href=""><i class="fab fa-weixin"></i>wechat </a>
+                    </p>
+                </div>
+            </li>
+            <li class="live-item">
+                <div class="live-text">
+                    <p>
+                        <a href=""><i class="fab fa-line"></i>line</a>
+                    </p>
+                </div>
+            </li>
+            <li class="live-item">
+                <div class="live-text">
+                    <p>
+                        <a href=""><i class="fab fa-skype"></i>skype</a>
+                    </p>
+                </div>
+            </li>
+            <li class="live-item">
+                <div class="live-text">
+                    <p>
+                        <a href=""><i class="fab fa-instagram-square"></i>instagram</a>
+                    </p>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div> -->
+<app-RacingHorse></app-RacingHorse>
+<router-outlet></router-outlet>
+
+
+<div class="clearfix"></div>
+
+<app-AppMessageBox [modalMsg]="dataSource.modalMsg"></app-AppMessageBox>
+
+<app-loading></app-loading>

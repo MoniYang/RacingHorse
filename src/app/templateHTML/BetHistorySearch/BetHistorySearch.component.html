@@ -1,0 +1,238 @@
+<div class="container">
+    <div class="top_height"></div>
+    <div class="col-md-3 col-sm-6 col-xs-6 p-0">
+        <div class="title_style  small_title">
+            <span class=" border_style text-left ">{{languageService.Language['Home_BetHistory']}}</span>
+        </div>
+    </div>
+    <div class="topic_hr"></div>
+    <div class="row">
+        <div class="col-lg-2 col-sm-4 col-xs-12 mb-2">
+            <select [(ngModel)]="dataSource.searchCondition.StatusCode">
+        <option *ngFor="let openStatus of dataSource.openStatus"
+          [ngValue]="openStatus.values">{{openStatus.text}}</option>
+      </select>
+        </div>
+
+        <div class="col-lg-2 col-sm-4 col-xs-6 mb-2">
+            <select [(ngModel)]="dataSource.SelectLotteryClass" (ngModelChange)="SelectLotteryClass()">
+              <option *ngFor="let selectedLotteryClass of dataSource.selectedLotteryClass"
+                [ngValue]="selectedLotteryClass">{{selectedLotteryClass.LotteryClassName}}</option>
+            </select>
+        </div>
+        <div class="col-lg-2 col-sm-4 col-xs-6 mb-2">
+            <select [(ngModel)]="dataSource.SelectLotteryType">
+              <option *ngFor="let selectedLotteryType of dataSource.selectedLotteryType"
+                [ngValue]="selectedLotteryType">{{selectedLotteryType.LotteryTypeCode}}</option>
+            </select>
+        </div>
+        <div class="col-lg-6 col-sm-12 col-xs-12 text-lg-right text-left ">
+            <div class="date_search ">
+                <!-- <h4 class="search_title float-left mr-2 mt-0">搜尋開獎歷史</h4> -->
+                <ul>
+                    <li class="search_title  mr-2 mt-0">{{languageService.Language['History_Search']}}</li>
+                    <li>
+                        <input type="date" [(ngModel)]="dataSource.searchCondition.dateS">
+                    </li>
+                    <li>~</li>
+                    <li>
+                        <input type="date" [(ngModel)]="dataSource.searchCondition.dateE">
+                    </li>
+                    <li>
+                        <button (click)="FindBetHistory()" class="circle_btn">{{languageService.Language['History_Go']}}</button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div class="real_table mb-10">
+        <table>
+            <tbody>
+                <tr>
+                    <th>{{languageService.Language['History_BetType']}}</th>
+                    <th>{{languageService.Language['History_BillNo']}}</th>
+                    <!--<th class="hidden-sm hidden-xs">bet</th>-->
+                    <th>{{languageService.Language['History_OpeningTime']}}</th>
+                    <th>{{languageService.Language['History_BetAmount']}}</th>
+                    <th>{{languageService.Language['History_WinLose']}}</th>
+                    <th>{{languageService.Language['History_CashRebate']}}</th>
+                </tr>
+                <!-- ngIf: dataSource.mPlayerObj.length === 0 -->
+                <!-- ngRepeat: mPlayer in dataSource.mPlayerObj -->
+                <tr *ngFor="let mPlayer of dataSource.mPlayerObj; index as i; trackBy: trackByMethod;">
+                    <td>{{mPlayer.LotteryTypeName}}
+                        <span *ngIf="mPlayer.IsBanker">D</span>
+                    </td>
+                    <td>
+                        <button (click)="SetMplayDetail(mPlayer)" data-toggle="modal" data-target="#ReceiptModal">
+                          {{mPlayer.CurrentPeriod}}
+                          <i class="fa fa-external-link" aria-hidden="true"></i>
+                        </button>
+                    </td>
+                    <td>
+                        {{mPlayer.OpenTime | date : "yyyy/MM/dd HH:mm:ss"}}
+                    </td>
+                    <td>
+                        {{mPlayer.BetAmount | currency: '': '':'1.2-2'}}
+                    </td>
+                    <td>
+                        {{mPlayer.WinLose | currency: '': '':'1.2-2'}}
+                        <!--<p>${{mPlayer.WinLose | number:2}}</p>-->
+                    </td>
+                    <td>
+                        {{mPlayer.CashRebateMoney | currency: '': '':'1.2-2'}}
+                        <!--<p>${{mPlayer.WinLose | number:2}}</p>-->
+                    </td>
+                </tr>
+                <!-- end ngRepeat: mPlayer in dataSource.mPlayerObj -->
+            </tbody>
+        </table>
+    </div>
+    <div class="col-md-12" style="margin:0px auto;">
+        <div class="page ">
+            <div class="col-12 p-0 d-flex align-items-center justify-content-end ">
+                <span class="mr-2" style="color: white;">{{languageService.Language['History_PageSize']}}</span>
+                <select [(ngModel)]="dataSource.PagerObj.PageSize" (ngModelChange)="ChangePageSize()" style="width:80px;">
+                  <option *ngFor="let PageSize of dataSource.PagerObj.PageSizeArray"
+                    [ngValue]="PageSize">{{PageSize}}</option>
+                </select>
+                <ul class="page__list">
+                    <li>
+                        <a href="" onclick='return false;' *ngIf="dataSource.PagerObj.CurrentPage > dataSource.PagerObj.PageRangeMax">
+                            <i class="fa fa-arrow-left" aria-hidden="true"></i>
+                        </a>
+                    </li>
+                    <li type="button" *ngFor="let PageArray of dataSource.PagerObj.PageArray">
+                        <a href="" onclick='return false;' (click)="ChangePage(PageArray)">{{PageArray}}</a>
+                    </li>
+                    <li>
+                        <a href="" onclick='return false;' *ngIf="dataSource.PagerObj.CurrentPage < dataSource.PagerObj.PageRangeMax">
+                            <i class="fa fa-arrow-right" aria-hidden="true"></i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade bet_area" id="ReceiptModal" tabindex="-1" role="dialog" aria-labelledby="ReceiptModalTitle" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span _ngcontent-miq-c53="" aria-hidden="true">×</span>
+                    </button>
+                    <h5 class="modal-title border_style title_style">{{languageService.Language['History_BetDetail']}}</h5>
+                </div>
+                <!-- ngIf: dataSource.mPlayerDetail.vwMPlayers.length > 0 -->
+                <div class="modal-body ng-scope" ng-if="dataSource.mPlayerDetail.vwMPlayers.length > 0">
+                    <div class="row">
+                        <div class="col-md-6  bet_text text-yellow ng-binding">
+                            <span>{{languageService.Language['History_BillNo']}}:</span> {{dataSource.mPlayerDetail.CurrentPeriod}}
+                        </div>
+                        <div class="col-md-6  bet_text text-yellow ng-binding">
+                            <span>{{languageService.Language['History_RoomID']}}:</span> {{dataSource.mPlayerDetail.oLottery.RoomID}}
+                        </div>
+                        <div class="col-md-6  bet_text text-white ng-binding">
+                            <span>{{languageService.Language['History_BetType']}}:</span> {{dataSource.mPlayerDetail.LotteryTypeName}}
+                        </div>
+                        <div class="col-md-6  bet_text text-white ng-binding">
+                            <span>{{languageService.Language['History_OpeningTime']}}:</span> {{dataSource.mPlayerDetail.OpenTime | date : "yyyy/MM/dd HH:mm:ss"}}
+                        </div>
+                        <div class="col-md-12  bet_text text-white ng-binding">
+                            <span>{{languageService.Language['History_OpeningResult']}}:</span> {{dataSource.mPlayerDetail.oLottery.Result}}
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="real_table mt-10">
+                        <table>
+                            <tbody>
+                                <tr>
+                                    <th>{{languageService.Language['History_BetTime']}}</th>
+                                    <th class="hidden-sm hidden-xs">{{languageService.Language['History_Bet']}}</th>
+                                    <th>{{languageService.Language['History_BetAmount']}}</th>
+                                    <th>{{languageService.Language['History_WinLose']}}</th>
+                                    <th>{{languageService.Language['History_Status']}}</th>
+                                </tr>
+                                <!-- ngRepeat: mPlayer in dataSource.mPlayerDetail.vwMPlayers -->
+                                <tr *ngFor="let vwMPlayer of dataSource.mPlayerDetail.vwMPlayers index as i; trackBy: trackByMethod;">
+                                    <td>
+                                        {{vwMPlayer.CreateDate | date : "yyyy/MM/dd HH:mm:ss"}}
+                                    </td>
+                                    <td class="hidden-sm hidden-xs ng-binding">
+                                        <div *ngIf="vwMPlayer.LotteryInfoID > 10 && vwMPlayer.LotteryInfoID < 21">
+                                            <img *ngIf="vwMPlayer.SelectedNums == 'S'" style="height: 30px;" src="content/images/OpenHistory/87.png" alt="Spade" />
+                                            <img *ngIf="vwMPlayer.SelectedNums == 'H'" style="height: 30px;" src="content/images/OpenHistory/84.png" alt="Heart" />
+                                            <img *ngIf="vwMPlayer.SelectedNums == 'D'" style="height: 30px;" src="content/images/OpenHistory/86.png" alt="Diamond" />
+                                            <img *ngIf="vwMPlayer.SelectedNums == 'C'" style="height: 30px;" src="content/images/OpenHistory/85.png" alt="Club" />
+                                            <img *ngIf="vwMPlayer.SelectedNums == 'TA'" style="height: 30px;" src="content/images/OpenHistory/91.png" alt="Big" />
+                                            <img *ngIf="vwMPlayer.SelectedNums == 'HSIAO'" style="height: 30px;" src="content/images/OpenHistory/90.png" alt="Small" />
+                                            <img *ngIf="vwMPlayer.SelectedNums == 'RED'" style="height: 30px;" src="content/images/OpenHistory/88.png" alt="Red" />
+                                            <img *ngIf="vwMPlayer.SelectedNums == 'BLACK'" style="height: 30px;" src="content/images/OpenHistory/89.png" alt="Black" />
+                                            <img *ngIf="vwMPlayer.SelectedNums == 'UP'" style="height: 30px;" src="content/images/OpenHistory/88_2.png" alt="UP" />
+                                            <img *ngIf="vwMPlayer.SelectedNums == 'DOWN'" style="height: 30px;" src="content/images/OpenHistory/104.png" alt="DOWN" />
+                                            <img *ngIf="vwMPlayer.SelectedNums == '14'" style="height: 30px;" src="content/images/OpenHistory/47.png" alt="Jorker" />
+                                            <p *ngIf="vwMPlayer.SelectedNums !== 'S' && vwMPlayer.SelectedNums !== 'H'
+                                                  && vwMPlayer.SelectedNums !== 'D' && vwMPlayer.SelectedNums !== 'C' && vwMPlayer.SelectedNums !== '14'
+                                                  && vwMPlayer.SelectedNums !== 'TA' && vwMPlayer.SelectedNums !== 'HSIAO' && vwMPlayer.SelectedNums !== 'RED'
+                                                  && vwMPlayer.SelectedNums !== 'BLACK' && vwMPlayer.SelectedNums !== 'UP' && vwMPlayer.SelectedNums !== 'DOWN'
+                                                  ">
+                                                {{vwMPlayer.SelectedNums}}
+                                            </p>
+                                        </div>
+                                        <div *ngIf="vwMPlayer.LotteryInfoID <= 10 || vwMPlayer.LotteryInfoID >= 21">
+                                            <img *ngIf="vwMPlayer.SelectedNums == 'RED'" style="height: 30px;" src="content/images/OpenHistory/97.png" alt="Red" />
+                                            <img *ngIf="vwMPlayer.SelectedNums == 'BLACK'" style="height: 30px;" src="content/images/OpenHistory/89_3.png" alt="Black" />
+                                            <img *ngIf="vwMPlayer.SelectedNums == 'TA'" style="height: 30px;" src="content/images/OpenHistory/106.png" alt="Big" />
+                                            <img *ngIf="vwMPlayer.SelectedNums == 'HSIAO'" style="height: 30px;" src="content/images/OpenHistory/93.png" alt="Small" />
+                                            <img *ngIf="vwMPlayer.SelectedNums == 'TAN'" style="height: 30px;" src="content/images/OpenHistory/103.png" alt="Odd" />
+                                            <img *ngIf="vwMPlayer.SelectedNums == 'SHUANG'" style="height: 30px;" src="content/images/OpenHistory/92.png" alt="Even" />
+                                            <img *ngIf="vwMPlayer.SelectedNums == '1ST'" style="height: 30px;" src="content/images/OpenHistory/96.png" alt="1st" />
+                                            <img *ngIf="vwMPlayer.SelectedNums == '2ND'" style="height: 30px;" src="content/images/OpenHistory/95.png" alt="2nd" />
+                                            <img *ngIf="vwMPlayer.SelectedNums == '3RD'" style="height: 30px;" src="content/images/OpenHistory/94.png" alt="3rd" />
+                                            <img *ngIf="vwMPlayer.SelectedNums == '1ST12'" style="height: 30px;" src="content/images/OpenHistory/99.png" alt="1st12" />
+                                            <img *ngIf="vwMPlayer.SelectedNums == '2ND12'" style="height: 30px;" src="content/images/OpenHistory/100.png" alt="2nd12" />
+                                            <img *ngIf="vwMPlayer.SelectedNums == '3RD12'" style="height: 30px;" src="content/images/OpenHistory/101.png" alt="3rd12" />
+                                            <p *ngIf="vwMPlayer.SelectedNums !== 'RED' && vwMPlayer.SelectedNums !== 'BLACK'
+                                                    && vwMPlayer.SelectedNums !== 'TA' && vwMPlayer.SelectedNums !== 'HSIAO' && vwMPlayer.SelectedNums !== 'TAN'
+                                                    && vwMPlayer.SelectedNums !== 'SHUANG' && vwMPlayer.SelectedNums !== '1ST' && vwMPlayer.SelectedNums !== '2ND'
+                                                    && vwMPlayer.SelectedNums !== '3RD' && vwMPlayer.SelectedNums !== '1ST12' && vwMPlayer.SelectedNums !== '2ND12'
+                                                    && vwMPlayer.SelectedNums !== '3RD12'
+                                                ">
+                                                {{vwMPlayer.SelectedNums}}
+                                            </p>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        {{vwMPlayer.Price | currency: '': '':'1.2-2'}}
+                                    </td>
+                                    <td>
+                                        <p *ngIf="vwMPlayer.IsWin == null">-</p>
+                                        <p *ngIf="vwMPlayer.IsWin == true && !vwMPlayer.BankerID">
+                                            {{vwMPlayer.WinMoney | currency: '': '':'1.2-2'}}
+                                        </p>
+                                        <p *ngIf="vwMPlayer.IsWin == true && vwMPlayer.BankerID > 0">
+                                            {{-vwMPlayer.Price | currency: '': '':'1.2-2'}}
+                                        </p>
+                                        <p *ngIf="vwMPlayer.IsWin == false && vwMPlayer.BankerID > 0">
+                                            {{vwMPlayer.WinMoney | currency: '': '':'1.2-2'}}
+                                        </p>
+                                        <p *ngIf="vwMPlayer.IsWin == false && !vwMPlayer.BankerID">
+                                            {{-vwMPlayer.Price | currency: '': '':'1.2-2'}}
+                                        </p>
+                                    </td>
+                                    <td class="yellow">
+                                        <p *ngIf="vwMPlayer.IsWin != null" class="yellow ng-scope">{{languageService.Language['History_Opened']}}</p>
+                                    </td>
+                                </tr>
+                                <!-- end ngRepeat: mPlayer in dataSource.mPlayerDetail.vwMPlayers -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <!-- end ngIf: dataSource.mPlayerDetail.vwMPlayers.length > 0 -->
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,80 @@
+
+
+@import '_normalize';
+@import 'mixins_default';
+@import 'HorseGame';
+@import 'fontawesome';
+@import 'regular';
+@import 'solid';
+@import 'brands';
+
+body{
+  background-color:$black;
+}
+ul{
+  padding:0px;
+  margin:0px;
+  li{
+    list-style-type: none;
+  }
+}
+button{
+  padding:0px;
+  border:0px;
+  background-color:transparent;
+  &:focus,
+  &:active{
+    outline: none;
+    border:0px $yellow;
+    box-shadow: 0px 0px 0px;
+  }
+}
+input[type="text"]{
+  border-radius: 7px;
+  box-shadow: inset 2px 2px 4px 1px rgba(0, 0, 0, 0.68);
+  border: solid 1px #3d3d3d;
+  background-color: #232323;
+  width:100%;
+  padding:5px;
+  text-align: center;
+  &:focus{
+    border:0px;
+    box-shadow: 0 0 0px;
+    outline: none;
+    border:1px solid $yellow;
+  }
+
+}
+p{
+  margin-bottom: 5px;
+  line-height: 1.2;
+}
+img{
+  max-width:100%;
+}
+
+.opacity{
+  opacity: 0;
+}
+
+.frame{
+  &--container{
+    height: 100vh;
+    overflow: scroll;
+    position: relative;
+    display: flex;
+    align-content: space-between;
+    flex-direction: column;
+    padding: 0 3px;
+    @include noScrollBar;
+  }
+
+}
+.betFrame{
+  display: flex;
+  flex: 5;
+  overflow-y: auto;
+  overflow-x: hidden;
+  @include noScrollBar;
+}
+
